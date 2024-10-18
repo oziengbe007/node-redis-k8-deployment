@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nodejs-container
-        image: oziengbe/nodeapp:latest
+        image: oziengbe/redis-node-app:latest
         ports:
         - containerPort: 30200
         env:
@@ -24,16 +24,12 @@ spec:
           httpGet:
             path: /
             port: 30200
-          initialDelaySeconds: 5
-          periodSeconds: 5
-      - name: redis
-        image: redis:alpine
-        ports:
-        - containerPort: 6379
-        volumeMounts:
-        - mountPath: /data/redis
-          name: redis-storage
-      volumes:
-      - name: redis-storage
-        persistentVolumeClaim:
-          claimName: redis-pvc
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 30200
+          initialDelaySeconds: 15
+          periodSeconds: 10
+      
